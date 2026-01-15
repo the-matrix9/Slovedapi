@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+uvloop
+aiofiles
+aiohttp
+python-multipart
+jinja2
+cloudscraper
+beautifulsoup4
+lxml
