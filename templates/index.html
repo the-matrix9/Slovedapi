@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Smart Audio Magic Studio: Premium audio processing with effects like Slowed Reverb, 8D Audio, Bass Boost & more. Developed by @ISmartCoder.">
+    <meta name="keywords" content="Smart Audio Magic Studio, audio effects, slowed reverb, 8D audio, bass boost, audio processing">
+    <meta name="author" content="@ISmartCoder">
+    <title>Smart Audio Magic Studio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta3/css/all.css">
+    <link rel="icon" href="https://i.ibb.co/Hh4kF2b/icon.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta property="og:title" content="Smart Audio Magic Studio">
+    <meta property="og:description" content="Premium audio processing with stunning effects">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <style>
+        :root {
+            --primary-gold: #FFD700;
+            --primary-gold-dark: #FFB300;
+            --accent-cyan: #00FFF5;
+            --accent-cyan-dark: #00CCC4;
+            --accent-purple: #9D4EDD;
+            --accent-pink: #FF6B9D;
+            --accent-orange: #FF6B35;
+            --accent-green: #00E676;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B8B8B8;
+            --text-muted: #6B7280;
+            --bg-dark: #0A0A0F;
+            --bg-darker: #050508;
+            --bg-card: #16161F;
+            --bg-card-hover: #1E1E2D;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --glow-gold: 0 0 30px rgba(255, 215, 0, 0.3);
+            --glow-cyan: 0 0 30px rgba(0, 255, 245, 0.3);
+            --glow-purple: 0 0 30px rgba(157, 78, 221, 0.3);
+            --success-green: #00E676;
+            --error-red: #FF5252;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-dark);
+            background-image: 
+                radial-gradient(at 20% 10%, rgba(157, 78, 221, 0.15) 0px, transparent 50%),
+                radial-gradient(at 80% 90%, rgba(0, 255, 245, 0.1) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(255, 215, 0, 0.05) 0px, transparent 50%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        .animated-bg span {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-purple));
+            animation: float 15s infinite ease-in-out;
+            opacity: 0.2;
+            filter: blur(60px);
+        }
+
+        .animated-bg span:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .animated-bg span:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 3s;
+            background: linear-gradient(45deg, var(--primary-gold), var(--accent-pink));
+        }
+
+        .animated-bg span:nth-child(3) {
+            width: 350px;
+            height: 350px;
+            bottom: 10%;
+            left: 50%;
+            animation-delay: 6s;
+        }
+
+        .animated-bg span:nth-child(4) {
+            width: 250px;
+            height: 250px;
+            top: 40%;
+            left: 30%;
+            animation-delay: 9s;
+            background: linear-gradient(45deg, var(--accent-orange), var(--accent-purple));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -50px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+        }
+
+        .hero {
+            position: relative;
+            padding: 4rem 1rem 3rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(20px);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        @keyframes slideUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 1.2rem;
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-card-hover));
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--glow-purple);
+            transition: all 0.3s ease;
+        }
+
+        .hero-badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(157, 78, 221, 0.4);
+        }
+
+        .hero-badge i {
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 5px var(--accent-purple)); }
+            50% { filter: drop-shadow(0 0 20px var(--accent-cyan)); }
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-cyan) 50%, var(--primary-gold) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            text-shadow: 0 0 80px rgba(157, 78, 221, 0.5);
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            font-weight: 500;
+            line-height: 1.7;
+            padding: 0 1rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: nowrap;
+            padding: 0 0.5rem;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-card-hover));
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            min-width: 100px;
+            flex: 1;
+            max-width: 160px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+            box-shadow: var(--glow-purple);
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            box-shadow: var(--glow-purple);
+        }
+
+        .stat-icon i {
+            font-size: 1.2rem;
+            color: var(--bg-dark);
+        }
+
+        .stat-number {
+            display: block;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: clamp(0.65rem, 1.5vw, 0.8rem);
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .main-content {
+            padding: 3rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: slideUp 0.8s ease-out 0.2s forwards;
+        }
+
+        .processor-section {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-card-hover));
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .processor-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(157, 78, 221, 0.1), transparent);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .processor-section h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        .upload-zone {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px dashed var(--border-color);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 2rem;
+        }
+
+        .upload-zone:hover, .upload-zone.dragover {
+            border-color: var(--accent-purple);
+            background: rgba(157, 78, 221, 0.1);
+            box-shadow: var(--glow-purple);
+        }
+
+        .upload-zone i {
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .upload-zone h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .upload-zone p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .url-input-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .url-input-group input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1rem 1.5rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .url-input-group input:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: var(--glow-cyan);
+        }
+
+        .url-input-group input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .style-selector {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 2rem;
+        }
+
+        .style-selector label {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-gold), var(--accent-cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+        }
+
+        .style-option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.25rem 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .style-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent, rgba(157, 78, 221, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .style-option:hover::before {
+            opacity: 1;
+        }
+
+        .style-option:hover {
+            border-color: var(--accent-purple);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(157, 78, 221, 0.3);
+        }
+
+        .style-option.active {
+            border-color: var(--accent-cyan);
+            background: linear-gradient(135deg, rgba(0, 255, 245, 0.15), rgba(157, 78, 221, 0.15));
+            box-shadow: var(--glow-cyan);
+        }
+
+        .style-option.active::after {
+            content: '✓';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-cyan);
+            color: var(--bg-dark);
+            border-radius: 50%;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .style-option .style-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .style-option .style-icon i {
+            color: var(--text-primary);
+        }
+
+        .style-option[data-style="slowed-reverb"] .style-icon {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        .style-option[data-style="8d-audio"] .style-icon {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+        .style-option[data-style="432hz"] .style-icon {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+        .style-option[data-style="very-light-bass"] .style-icon {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+        }
+        .style-option[data-style="light-bass"] .style-icon {
+            background: linear-gradient(135deg, #fa709a, #fee140);
+        }
+        .style-option[data-style="moderate-bass"] .style-icon {
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+        }
+        .style-option[data-style="heavy-bass"] .style-icon {
+            background: linear-gradient(135deg, #ff0844, #ffb199);
+        }
+        .style-option[data-style="extreme-bass"] .style-icon {
+            background: linear-gradient(135deg, #f12711, #f5af19);
+        }
+        .style-option[data-style="vocal-reverb"] .style-icon {
+            background: linear-gradient(135deg, #c471f5, #fa71cd);
+        }
+        .style-option[data-style="bathroom-reverb"] .style-icon {
+            background: linear-gradient(135deg, #48c6ef, #6f86d6);
+        }
+        .style-option[data-style="small-room-reverb"] .style-icon {
+            background: linear-gradient(135deg, #feada6, #f5efef);
+        }
+        .style-option[data-style="medium-room-reverb"] .style-icon {
+            background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+        }
+        .style-option[data-style="large-room-reverb"] .style-icon {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+        }
+        .style-option[data-style="church-hall-reverb"] .style-icon {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        .style-option[data-style="cathedral-reverb"] .style-icon {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        .style-option span {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            color: var(--text-primary);
+            font-weight: 700;
+            padding: 1.25rem 2rem;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            box-shadow: 0 10px 40px rgba(157, 78, 221, 0.4);
+            position: relative;
+            z-index: 1;
+            border: none;
+            cursor: pointer;
+        }
+
+        .process-btn:hover:not(:disabled) {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 50px rgba(157, 78, 221, 0.6);
+        }
+
+        .process-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .process-btn.loading .btn-text {
+            display: none;
+        }
+
+        .process-btn .spinner {
+            display: none;
+        }
+
+        .process-btn.loading .spinner {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .result-section {
+            display: none;
+            background: rgba(0, 230, 118, 0.1);
+            border: 1px solid var(--success-green);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .result-section.show {
+            display: block;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .result-section.error {
+            background: rgba(255, 82, 82, 0.1);
+            border-color: var(--error-red);
+        }
+
+        .result-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--success-green);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .result-section.error h3 {
+            color: var(--error-red);
+        }
+
+        .result-info {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .result-info p {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .result-info strong {
+            color: var(--text-primary);
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, var(--success-green), var(--accent-cyan));
+            color: var(--bg-dark);
+            font-weight: 700;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 230, 118, 0.4);
+            color: var(--bg-dark);
+        }
+
+        .features-section {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-card-hover));
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .features-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1), transparent);
+            animation: rotate 20s linear infinite;
+        }
+
+        .features-section h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-gold), var(--accent-cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.75rem;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-6px);
+            border-color: var(--accent-purple);
+            box-shadow: 0 15px 40px rgba(157, 78, 221, 0.2);
+        }
+
+        .feature-icon {
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            border-radius: 14px;
+            font-size: 1.5rem;
+            margin: 0 auto 1.25rem;
+            box-shadow: 0 8px 20px rgba(157, 78, 221, 0.3);
+        }
+
+        .feature-icon i {
+            color: var(--text-primary);
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .api-docs {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-card-hover));
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .api-docs h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-gold), var(--accent-cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .accordion-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .accordion-button {
+            background: transparent;
+            color: var(--text-primary);
+            font-weight: 600;
+            padding: 1.5rem;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background: linear-gradient(135deg, var(--accent-cyan-dark), var(--accent-purple));
+            color: var(--bg-dark);
+        }
+
+        .accordion-button::after {
+            filter: brightness(10);
+        }
+
+        .api-method-icon {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-gold), var(--accent-cyan));
+            border-radius: 12px;
+            font-size: 1.3rem;
+            box-shadow: var(--glow-gold);
+        }
+
+        .api-method-icon i {
+            color: var(--bg-dark);
+        }
+
+        .accordion-body {
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text-secondary);
+        }
+
+        .accordion-body pre {
+            background: var(--bg-darker);
+            padding: 1rem;
+            border-radius: 10px;
+            color: var(--accent-cyan);
+            font-size: 0.9rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, rgba(157, 78, 221, 0.2), rgba(0, 255, 245, 0.2));
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="none"/><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .contact-section h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.6rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-section p {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-section .btn {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            color: var(--text-primary);
+            font-weight: 700;
+            padding: 1rem 2rem;
+            border-radius: 14px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 10px 40px rgba(157, 78, 221, 0.4);
+            position: relative;
+            z-index: 1;
+            border: none;
+            text-decoration: none;
+        }
+
+        .contact-section .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 50px rgba(157, 78, 221, 0.6);
+            color: var(--text-primary);
+        }
+
+        .contact-section .btn i {
+            animation: pulse 2s infinite;
+        }
+
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 1rem 1.5rem;
+            text-align: center;
+            opacity: 0;
+            animation: slideUp 0.8s ease-out 0.4s forwards;
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-social a {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .footer-social a:hover {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            color: var(--bg-dark);
+            transform: translateY(-4px) rotate(10deg);
+            box-shadow: 0 10px 30px rgba(157, 78, 221, 0.4);
+        }
+
+        .footer-text {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            font-weight: 500;
+            line-height: 1.8;
+        }
+
+        .footer-text strong {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+
+        .footer-text a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .footer-text a:hover {
+            color: var(--primary-gold);
+        }
+
+        .copyright {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 992px) {
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+            }
+            .style-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-stats {
+                gap: 0.5rem;
+                padding: 0 0.25rem;
+            }
+            .stat-item {
+                padding: 0.75rem 0.5rem;
+                min-width: 80px;
+                border-radius: 12px;
+            }
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.75rem;
+            }
+            .feature-card {
+                padding: 1rem 0.75rem;
+            }
+            .feature-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+            .feature-card h3 {
+                font-size: 0.85rem;
+            }
+            .feature-card p {
+                font-size: 0.75rem;
+            }
+            .style-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.75rem;
+            }
+            .style-option {
+                padding: 1rem 0.5rem;
+            }
+            .style-option .style-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            .url-input-group {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-badge {
+                padding: 0.5rem 1rem;
+                font-size: 0.75rem;
+            }
+            .style-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5rem;
+            }
+            .style-option {
+                padding: 0.75rem 0.25rem;
+            }
+            .style-option .style-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+                border-radius: 10px;
+            }
+            .style-option span {
+                font-size: 0.65rem;
+            }
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5rem;
+            }
+            .feature-card {
+                padding: 0.75rem 0.5rem;
+            }
+            .feature-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 1rem;
+                border-radius: 10px;
+                margin-bottom: 0.75rem;
+            }
+            .feature-card h3 {
+                font-size: 0.7rem;
+            }
+            .feature-card p {
+                font-size: 0.65rem;
+                display: none;
+            }
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        audio::-webkit-media-controls-panel {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-card-hover));
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge">
+                <i class="fad fa-waveform-lines"></i>
+                <span><strong>Smart Audio Magic Studio</strong></span>
+            </div>
+            <h1>🎵 Smart Audio Magic Studio</h1>
+            <p class="hero-subtitle">Transform your audio with stunning effects. Slowed Reverb, 8D Audio, Bass Boost, and 15+ professional presets powered by cutting-edge technology.</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fad fa-music"></i>
+                    </div>
+                    <span class="stat-number">15+</span>
+                    <span class="stat-label">Effects</span>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fad fa-bolt"></i>
+                    </div>
+                    <span class="stat-number">Fast</span>
+                    <span class="stat-label">Processing</span>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fad fa-cloud"></i>
+                    </div>
+                    <span class="stat-number">Free</span>
+                    <span class="stat-label">API Access</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="main-content">
+        <div class="container">
+            <div class="processor-section">
+                <h2>🎧 Audio Effect Processor</h2>
+                
+                <div class="upload-zone" id="uploadZone">
+                    <i class="fad fa-cloud-music"></i>
+                    <h3>Drop your audio file here</h3>
+                    <p>or click to browse • MP3, WAV, OGG, M4A supported</p>
+                    <input type="file" id="fileInput" accept="audio/*">
+                </div>
+
+                <div class="url-input-group">
+                    <input type="text" id="audioUrl" placeholder="🔗 Or paste audio URL here...">
+                </div>
+
+                <div class="style-selector">
+                    <label>✨ Choose Your Effect Style</label>
+                    <div class="style-grid" id="styleGrid">
+                        <div class="style-option active" data-style="slowed-reverb">
+                            <div class="style-icon"><i class="fad fa-turntable"></i></div>
+                            <span>Slowed + Reverb</span>
+                        </div>
+                        <div class="style-option" data-style="8d-audio">
+                            <div class="style-icon"><i class="fad fa-head-side-headphones"></i></div>
+                            <span>8D Audio</span>
+                        </div>
+                        <div class="style-option" data-style="432hz">
+                            <div class="style-icon"><i class="fad fa-wave-sine"></i></div>
+                            <span>432 Hz</span>
+                        </div>
+                        <div class="style-option" data-style="very-light-bass">
+                            <div class="style-icon"><i class="fad fa-signal-bars-weak"></i></div>
+                            <span>Very Light Bass</span>
+                        </div>
+                        <div class="style-option" data-style="light-bass">
+                            <div class="style-icon"><i class="fad fa-signal-bars-fair"></i></div>
+                            <span>Light Bass</span>
+                        </div>
+                        <div class="style-option" data-style="moderate-bass">
+                            <div class="style-icon"><i class="fad fa-signal-bars-good"></i></div>
+                            <span>Moderate Bass</span>
+                        </div>
+                        <div class="style-option" data-style="heavy-bass">
+                            <div class="style-icon"><i class="fad fa-signal-bars-strong"></i></div>
+                            <span>Heavy Bass</span>
+                        </div>
+                        <div class="style-option" data-style="extreme-bass">
+                            <div class="style-icon"><i class="fad fa-volume-xmark"></i></div>
+                            <span>Extreme Bass</span>
+                        </div>
+                        <div class="style-option" data-style="vocal-reverb">
+                            <div class="style-icon"><i class="fad fa-microphone-stand"></i></div>
+                            <span>Vocal Reverb</span>
+                        </div>
+                        <div class="style-option" data-style="bathroom-reverb">
+                            <div class="style-icon"><i class="fad fa-shower"></i></div>
+                            <span>Bathroom</span>
+                        </div>
+                        <div class="style-option" data-style="small-room-reverb">
+                            <div class="style-icon"><i class="fad fa-square"></i></div>
+                            <span>Small Room</span>
+                        </div>
+                        <div class="style-option" data-style="medium-room-reverb">
+                            <div class="style-icon"><i class="fad fa-house"></i></div>
+                            <span>Medium Room</span>
+                        </div>
+                        <div class="style-option" data-style="large-room-reverb">
+                            <div class="style-icon"><i class="fad fa-warehouse-full"></i></div>
+                            <span>Large Room</span>
+                        </div>
+                        <div class="style-option" data-style="church-hall-reverb">
+                            <div class="style-icon"><i class="fad fa-church"></i></div>
+                            <span>Church Hall</span>
+                        </div>
+                        <div class="style-option" data-style="cathedral-reverb">
+                            <div class="style-icon"><i class="fad fa-gopuram"></i></div>
+                            <span>Cathedral</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="process-btn" id="processBtn" disabled>
+                    <i class="fad fa-wand-magic-sparkles btn-text"></i>
+                    <span class="btn-text">Apply Effect Magic ✨</span>
+                    <i class="fad fa-spinner-third spinner"></i>
+                    <span class="spinner">Processing...</span>
+                </button>
+
+                <div class="result-section" id="resultSection">
+                    <h3><i class="fad fa-check-circle"></i> Processing Complete!</h3>
+                    <div class="result-info">
+                        <p><strong>Style Applied:</strong> <span id="resultStyle">-</span></p>
+                        <p><strong>Filename:</strong> <span id="resultFilename">-</span></p>
+                        <p><strong>Expires In:</strong> <span id="resultExpiry">60 seconds</span></p>
+                    </div>
+                    <audio controls id="audioPlayer" style="width: 100%; margin-bottom: 1rem; border-radius: 12px;"></audio>
+                    <a href="#" class="download-btn" id="downloadBtn" download>
+                        <i class="fad fa-download"></i>
+                        Download Processed Audio
+                    </a>
+                </div>
+            </div>
+
+            <div class="features-section">
+                <h2>⚡ Why Choose Smart Audio Magic Studio?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fad fa-waveform-lines"></i>
+                        </div>
+                        <h3>15+ Audio Effects</h3>
+                        <p>Slowed Reverb, 8D Audio, Bass Boost to Cathedral Reverb.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fad fa-rocket-launch"></i>
+                        </div>
+                        <h3>Lightning Fast</h3>
+                        <p>Process audio in seconds with async engine.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fad fa-code"></i>
+                        </div>
+                        <h3>Simple REST API</h3>
+                        <p>Easy integration with any platform.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fad fa-link"></i>
+                        </div>
+                        <h3>URL Processing</h3>
+                        <p>Process audio directly from URLs.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fad fa-file-music"></i>
+                        </div>
+                        <h3>Multi Format</h3>
+                        <p>MP3, WAV, OGG, M4A support.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fad fa-gift"></i>
+                        </div>
+                        <h3>100% Free</h3>
+                        <p>No API keys, no limits, forever free.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="api-docs">
+                <h2>📚 API Documentation</h2>
+                <div class="accordion" id="apiDocsAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#stylesMethod">
+                                <div class="api-method-icon">
+                                    <i class="fad fa-list-music"></i>
+                                </div>
+                                GET /styles - List All Effects
+                            </button>
+                        </h2>
+                        <div id="stylesMethod" class="accordion-collapse collapse" data-bs-parent="#apiDocsAccordion">
+                            <div class="accordion-body">
+                                <p>Get a list of all available audio effect styles.</p>
+                                <p><strong>Response:</strong> JSON object with all available styles</p>
+                                <pre>curl -X GET "http://your-api-url/styles"</pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#processMethod">
+                                <div class="api-method-icon">
+                                    <i class="fad fa-cloud-arrow-up"></i>
+                                </div>
+                                POST /process - Upload & Process
+                            </button>
+                        </h2>
+                        <div id="processMethod" class="accordion-collapse collapse" data-bs-parent="#apiDocsAccordion">
+                            <div class="accordion-body">
+                                <p>Upload an audio file and apply an effect style.</p>
+                                <p><strong>Parameters:</strong></p>
+                                <ul>
+                                    <li><code>file</code> (required) - Audio file (multipart/form-data)</li>
+                                    <li><code>style</code> (optional) - Effect style ID (default: slowed-reverb)</li>
+                                </ul>
+                                <pre>curl -X POST "http://your-api-url/process?style=8d-audio" \
+  -F "file=@your-audio.mp3"</pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#editMethod">
+                                <div class="api-method-icon">
+                                    <i class="fad fa-link-horizontal"></i>
+                                </div>
+                                GET /api/edit - Process from URL
+                            </button>
+                        </h2>
+                        <div id="editMethod" class="accordion-collapse collapse" data-bs-parent="#apiDocsAccordion">
+                            <div class="accordion-body">
+                                <p>Process audio directly from a URL without uploading.</p>
+                                <p><strong>Parameters:</strong></p>
+                                <ul>
+                                    <li><code>url</code> (required) - Direct URL to the audio file</li>
+                                    <li><code>style</code> (optional) - Effect style ID (default: slowed-reverb)</li>
+                                </ul>
+                                <pre>curl -X GET "http://your-api-url/api/edit?url=https://example.com/audio.mp3&style=heavy-bass"</pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#downloadMethod">
+                                <div class="api-method-icon">
+                                    <i class="fad fa-cloud-arrow-down"></i>
+                                </div>
+                                GET /download/{filename} - Download
+                            </button>
+                        </h2>
+                        <div id="downloadMethod" class="accordion-collapse collapse" data-bs-parent="#apiDocsAccordion">
+                            <div class="accordion-body">
+                                <p>Download the processed audio file.</p>
+                                <p><strong>Parameters:</strong></p>
+                                <ul>
+                                    <li><code>filename</code> (required) - Filename from process response</li>
+                                </ul>
+                                <p><strong>Note:</strong> Files expire after 60 seconds</p>
+                                <pre>curl -X GET "http://your-api-url/download/processed_abc123_audio.mp3" -o output.mp3</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-section">
+                <h2>Need Custom Audio Solutions? 🎵</h2>
+                <p>Create bespoke audio processing APIs, Telegram bots, and integrations. Partner with us for premium, tailored solutions.</p>
+                <a href="https://t.me/abirxdhackz" class="btn">
+                    <span>Contact @abirxdhackz</span>
+                    <i class="fad fa-paper-plane-top"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-social">
+                <a href="https://github.com/abirxdhackz" target="_blank" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://facebook.com/abirxdhackz" target="_blank" title="Facebook">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://instagram.com/abirxdhackz" target="_blank" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://twitter.com/abirxdhackz" target="_blank" title="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://youtube.com/@abirxdhackz" target="_blank" title="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://t.me/abirxdhackz" target="_blank" title="Telegram">
+                    <i class="fab fa-telegram"></i>
+                </a>
+            </div>
+            <p class="footer-text">
+                Built with <strong>passion</strong> and <strong>innovation</strong> by <a href="https://t.me/ISmartCoder" target="_blank">@ISmartCoder</a>
+                <br>
+                Updates & Community: <a href="https://t.me/abirxdhackz" target="_blank">@abirxdhackz</a>
+            </p>
+            <div class="copyright">
+                © 2026 Smart Audio Magic Studio. All Rights Reserved. | Engineered with Excellence 🎧
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+        const audioUrl = document.getElementById('audioUrl');
+        const styleGrid = document.getElementById('styleGrid');
+        const processBtn = document.getElementById('processBtn');
+        const resultSection = document.getElementById('resultSection');
+
+        let selectedFile = null;
+        let selectedStyle = 'slowed-reverb';
+
+        // Style selection
+        styleGrid.addEventListener('click', (e) => {
+            const option = e.target.closest('.style-option');
+            if (option) {
+                document.querySelectorAll('.style-option').forEach(o => o.classList.remove('active'));
+                option.classList.add('active');
+                selectedStyle = option.dataset.style;
+            }
+        });
+
+        // File upload zone
+        uploadZone.addEventListener('click', () => fileInput.click());
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('dragover');
+        });
+        uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+            if (e.dataTransfer.files.length) {
+                selectedFile = e.dataTransfer.files[0];
+                updateUploadZone();
+            }
+        });
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length) {
+                selectedFile = fileInput.files[0];
+                updateUploadZone();
+            }
+        });
+
+        function updateUploadZone() {
+            if (selectedFile) {
+                uploadZone.innerHTML = `
+                    <i class="fad fa-check-circle" style="color: #00E676;"></i>
+                    <h3>${selectedFile.name}</h3>
+                    <p>Click to change file • ${(selectedFile.size / 1024 / 1024).toFixed(2)} MB</p>
+                `;
+                audioUrl.value = '';
+                updateProcessButton();
+            }
+        }
+
+        audioUrl.addEventListener('input', () => {
+            if (audioUrl.value.trim()) {
+                selectedFile = null;
+                uploadZone.innerHTML = `
+                    <i class="fad fa-cloud-music"></i>
+                    <h3>Drop your audio file here</h3>
+                    <p>or click to browse • MP3, WAV, OGG, M4A supported</p>
+                `;
+            }
+            updateProcessButton();
+        });
+
+        function updateProcessButton() {
+            processBtn.disabled = !(selectedFile || audioUrl.value.trim());
+        }
+
+        // Process audio
+        processBtn.addEventListener('click', async () => {
+            if (processBtn.disabled) return;
+            
+            processBtn.classList.add('loading');
+            processBtn.disabled = true;
+            resultSection.classList.remove('show', 'error');
+            
+            // Reset result section visibility
+            document.querySelector('.result-info').style.display = 'block';
+            document.getElementById('audioPlayer').style.display = 'block';
+            document.getElementById('downloadBtn').style.display = 'inline-flex';
+
+            try {
+                let response;
+                
+                if (selectedFile) {
+                    const formData = new FormData();
+                    formData.append('file', selectedFile);
+                    
+                    response = await fetch(`/process?style=${selectedStyle}`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                } else {
+                    response = await fetch(`/api/edit?url=${encodeURIComponent(audioUrl.value.trim())}&style=${selectedStyle}`);
+                }
+
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById('resultStyle').textContent = data.style_name;
+                    document.getElementById('resultFilename').textContent = data.filename;
+                    document.getElementById('downloadBtn').href = data.download_url;
+                    document.getElementById('audioPlayer').src = data.download_url;
+                    resultSection.querySelector('h3').innerHTML = '<i class="fad fa-check-circle"></i> Processing Complete! 🎉';
+                    resultSection.classList.remove('error');
+                    resultSection.classList.add('show');
+                } else {
+                    throw new Error(data.detail || 'Processing failed');
+                }
+            } catch (error) {
+                resultSection.querySelector('h3').innerHTML = `<i class="fad fa-times-circle"></i> Error: ${error.message}`;
+                resultSection.classList.add('show', 'error');
+                document.querySelector('.result-info').style.display = 'none';
+                document.getElementById('audioPlayer').style.display = 'none';
+                document.getElementById('downloadBtn').style.display = 'none';
+            } finally {
+                processBtn.classList.remove('loading');
+                updateProcessButton();
+            }
+        });
+    </script>
+</body>
+</html>
