@@ -39,10 +39,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/"
-Issues = "https://github.com/"
-Documentation = "https://github.com/"
+Homepage = "https://github.com/the-matrix9/Slovedapi/audio-processor-api"
+Issues = "https://github.com/the-matrix9/Slovedapi/issues"
+Documentation = "https://github.com/the-matrix9/Slovedapi#readme"
 
 [project.authors]
-name = "rishu"
-email = "abirxdhdnsbackz@example.com"
+name = "Rishu"
+email = "abirxdhackzhehdb@example.com"
