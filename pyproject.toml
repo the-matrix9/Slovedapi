@@ -1,0 +1,48 @@
+[project]
+name = "audio-processor-api"
+version = "1.0.0"
+description = "Async FastAPI-based audio processing service with AudioAlter integration"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "uvloop",
+    "aiofiles",
+    "aiohttp",
+    "python-multipart",
+    "jinja2",
+    "cloudscraper",
+    "beautifulsoup4",
+]
+
+[project.scripts]
+app = "api:app"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["*"]
+exclude = ["templates*", "static*", "assets*", "frontend*"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+    "httpx",
+]
+
+[project.urls]
+Homepage = "https://github.com/"
+Issues = "https://github.com/"
+Documentation = "https://github.com/"
+
+[project.authors]
+name = "rishu"
+email = "abirxdhdnsbackz@example.com"
